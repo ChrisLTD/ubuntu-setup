@@ -37,11 +37,13 @@ append_to_bashrc() {
 
 #!/usr/bin/env bash
 
+fancy_echo "Let's setup your awesome dev machine"
+
 # Get user email
-fancy_echo "What's your email address?"
+fancy_echo "What's your email address? (Used in your git profile and SSH key label)"
   read emailvar
 
-fancy_echo "What's your name?"
+fancy_echo "What's your name? (Used in your git profile)"
   read namevar
 
 # trap EXIT to print failed message
