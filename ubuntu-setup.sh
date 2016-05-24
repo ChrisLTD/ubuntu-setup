@@ -16,26 +16,52 @@ install_if_needed() {
   fi
 }
 
-append_to_zshrc() {
-  local text="$1" zshrc
+append_to_bashrc() {
+  local text="$1" bashrc
   local skip_new_line="$2"
 
-  if [[ -w "$HOME/.zshrc.local" ]]; then
-    zshrc="$HOME/.zshrc.local"
+  if [[ -w "$HOME/.bashrc" ]]; then
+    bashrc="$HOME/.bashrc"
   else
-    zshrc="$HOME/.zshrc"
+    bashrc="$HOME/.bashrc"
   fi
 
-  if ! grep -Fqs "$text" "$zshrc"; then
+  if ! grep -Fqs "$text" "$bashrc"; then
     if (( skip_new_line )); then
-      printf "%s\n" "$text" >> "$zshrc"
+      printf "%s\n" "$text" >> "$bashrc"
     else
-      printf "\n%s\n" "$text" >> "$zshrc"
+      printf "\n%s\n" "$text" >> "$bashrc"
     fi
   fi
 }
 
 #!/usr/bin/env bash
+
+# Get user email
+fancy_echo "What's your email address?"
+  read emailvar
+
+fancy_echo "What's your name?"
+  read namevar
+
+# trap EXIT to print failed message
+trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
+set -e
+
+if [[ ! -d "$HOME/.bin/" ]]; then
+  mkdir "$HOME/.bin"
+fi
+
+if [ ! -f "$HOME/.bashrc" ]; then
+  touch "$HOME/.bashrc"
+fi
+
+if ! grep -qiE 'wheezy|jessie|precise|trusty' /etc/os-release; then
+  fancy_echo "Sorry! we don't currently support that distro."
+  exit 1
+fi
+
+append_to_bashrc 'export PATH="$HOME/.bin:$PATH"'
 
 fancy_echo "Updating system packages ..."
   if command -v aptitude >/dev/null; then
@@ -85,6 +111,9 @@ fancy_echo "Installing curl ..."
 fancy_echo "Installing zsh ..."
   install_if_needed zsh
 
+fancy_echo "Changing your shell to zsh ..."
+  chsh -s $(which zsh)
+
 fancy_echo "Installing node, to render the rails asset pipeline ..."
   install_if_needed nodejs
 
@@ -96,6 +125,9 @@ chruby_from_source() {
   sudo make install
   cd
   rm -rf /tmp/chruby-0.3.9/
+
+  append_to_bashrc 'source /usr/local/share/chruby/chruby.sh'
+  append_to_bashrc 'source /usr/local/share/chruby/auto.sh'
 }
 
 ruby_install_from_source() {
@@ -118,11 +150,11 @@ fancy_echo "Installing Ruby $ruby_version ..."
   ruby-install ruby "$ruby_version"
 
 fancy_echo "Loading chruby and changing to Ruby $ruby_version ..."
-  source ~/.zshrc
   chruby $ruby_version
 
 fancy_echo "Setting default Ruby to $ruby_version ..."
-  append_to_zshrc "chruby ruby-$ruby_version"
+  source ~/.bashrc
+  append_to_bashrc "chruby ruby-$ruby_version"
 
 fancy_echo "Updating to latest Rubygems version ..."
   gem update --system
@@ -172,8 +204,12 @@ fancy echo "Pulling dotfiles ..."
 fancy echo "Symlinking gitconfig ..."
   ln -s ~/dotfiles/.gitconfig ~/.gitconfig
 
+fancy echo "Setting git name and email address ..."
+  git config user.email "$emailvar"
+  git config user.name "$namevar"
+
 fancy echo "Generating SSH key ..."
-  ssh-keygen -t rsa -b 4096 -C "chrisltd@gmail.com"
+  ssh-keygen -t rsa -b 4096 -C "$emailvar"
 
 fancy echo "Start SSH agent ..."
   eval "$(ssh-agent -s)"
