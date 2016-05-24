@@ -172,5 +172,17 @@ fancy echo "Pulling dotfiles ..."
 fancy echo "Symlinking gitconfig ..."
   ln -s ~/dotfiles/.gitconfig ~/.gitconfig
 
+fancy echo "Generating SSH key ..."
+  ssh-keygen -t rsa -b 4096 -C "chrisltd@gmail.com"
+
+fancy echo "Start SSH agent ..."
+  eval "$(ssh-agent -s)"
+
+fancy echo "Add new key to SSH agent ..."
+  ssh-add ~/.ssh/id_rsa
+
+Fancy echo "Copy your public key for adding to Github, etc. ..."
+  cat ~/.ssh/id_rsa.pub
+
 fancy_echo "Your public IP is ..."
   ip addr show eth0 | grep inet | awk '{ print $2; }' | sed 's/\/.*$//'
