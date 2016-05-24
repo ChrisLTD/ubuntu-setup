@@ -108,12 +108,6 @@ fancy_echo "Installing watch, to execute a program periodically and show the out
 fancy_echo "Installing curl ..."
   install_if_needed curl
 
-fancy_echo "Installing zsh ..."
-  install_if_needed zsh
-
-fancy_echo "Changing your shell to zsh ..."
-  chsh -s $(which zsh)
-
 fancy_echo "Installing node, to render the rails asset pipeline ..."
   install_if_needed nodejs
 
