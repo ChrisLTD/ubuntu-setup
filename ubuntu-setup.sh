@@ -161,4 +161,16 @@ fancy_echo "Setting up PHP packages for Wordpress ..."
   install_if_needed php5-gd libssh2-php
 
 fancy_echo "Restarting Apache ..."
-  sudo service apache2 restart
+  service apache2 restart
+
+fancy echo "Installing vim settings ..."
+  git clone https://github.com/ChrisLTD/macvim_config.git ~/.vim
+
+fancy echo "Pulling dotfiles ..."
+  git clone https://github.com/ChrisLTD/ubuntu-setup.git ~/dotfiles
+
+fancy echo "Symlinking gitconfig ..."
+  ln -s ~/dotfiles/.gitconfig ~/.gitconfig
+
+fancy_echo "Your public IP is ..."
+  ip addr show eth0 | grep inet | awk '{ print $2; }' | sed 's/\/.*$//'
