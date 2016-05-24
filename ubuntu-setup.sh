@@ -147,6 +147,7 @@ fancy_echo "Installing Ruby $ruby_version ..."
 
 fancy_echo "Loading chruby and changing to Ruby $ruby_version ..."
   source ~/.bashrc
+  source /usr/local/share/chruby/chruby.sh
   chruby $ruby_version
 
 fancy_echo "Setting default Ruby to $ruby_version ..."
