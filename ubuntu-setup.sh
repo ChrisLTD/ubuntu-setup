@@ -113,6 +113,9 @@ fancy_echo "Installing curl ..."
 fancy_echo "Installing node, to render the rails asset pipeline ..."
   install_if_needed nodejs
 
+fancy_echo "Installing npm ..."
+  install_if_needed npm
+
 chruby_from_source() {
   wget -O /tmp/chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz
   cd /tmp/
