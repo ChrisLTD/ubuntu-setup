@@ -203,8 +203,8 @@ fancy_echo "Symlinking gitconfig ..."
   ln -s ~/dotfiles/.gitconfig ~/.gitconfig
 
 fancy_echo "Setting git name and email address ..."
-  git config user.email "$emailvar"
-  git config user.name "$namevar"
+  git config --global user.email "$emailvar"
+  git config --global user.name "$namevar"
 
 fancy_echo "Generating SSH key ..."
   ssh-keygen -t rsa -b 4096 -C "$emailvar"
