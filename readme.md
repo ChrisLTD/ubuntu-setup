@@ -1,8 +1,8 @@
 For Ubuntu 14.04
 
-# 1. Setup Digital Ocean Droplet
+# A. Setup Digital Ocean Droplet
 
-# 2. SSH into Droplet and setup non-root user
+# B. SSH into Droplet and setup non-root user
 
 *Shamelessly stolen from [ThoughtBot](https://robots.thoughtbot.com/remote-development-machine)*
 
@@ -18,15 +18,15 @@ For Ubuntu 14.04
 
 5. Since we now have the SSH key authorized for the new user, let’s lock down sshd from allowing any user to authenticate with a password. Open `/etc/ssh/sshd_config` with your editor of choice and change `#PasswordAuthentication yes` to `PasswordAuthentication no`.
 
-6. Note: once you have saved this change, execute restart ssh to reload the configuration.
+6. Note: once you have saved this change, execute `restart ssh` to reload the configuration.
 
-7. Now we can add this new user to the sudoers file. This will allow this user to execute the sudo command. Replicate the line `root ALL=(ALL:ALL) ALL`, replacing root with your new username, and save the file. (If you’re in vim, you’ll need to save with :w! since the file is readonly.)
+7. Now we can add this new user to the `/etc/sudoers` file. This will allow this user to execute the sudo command. Replicate the line `root ALL=(ALL:ALL) ALL`, replacing root with your new username, and save the file. (If you’re in vim, you’ll need to save with :w! since the file is readonly.)
 
 8. Log out of your SSH session and log in again, but this time use your new username: `ssh USER_NAME@<IP-ADDRESS-OF-DROPLET>`
 
-# 3. Run this command:
+# C. Run this command:
 
 `bash <(wget -qO- https://github.com/ChrisLTD/ubuntu-setup/raw/master/ubuntu-setup.sh)
 2>&1 | tee ~/init.log`
 
-# 4. Enjoy
+# D. Enjoy
