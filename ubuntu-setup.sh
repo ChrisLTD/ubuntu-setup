@@ -193,29 +193,29 @@ fancy_echo "Setting up PHP packages for Wordpress ..."
 fancy_echo "Restarting Apache ..."
   service apache2 restart
 
-fancy echo "Installing vim settings ..."
+fancy_echo "Installing vim settings ..."
   git clone https://github.com/ChrisLTD/macvim_config.git ~/.vim
 
-fancy echo "Pulling dotfiles ..."
+fancy_echo "Pulling dotfiles ..."
   git clone https://github.com/ChrisLTD/ubuntu-setup.git ~/dotfiles
 
-fancy echo "Symlinking gitconfig ..."
+fancy_echo "Symlinking gitconfig ..."
   ln -s ~/dotfiles/.gitconfig ~/.gitconfig
 
-fancy echo "Setting git name and email address ..."
+fancy_echo "Setting git name and email address ..."
   git config user.email "$emailvar"
   git config user.name "$namevar"
 
-fancy echo "Generating SSH key ..."
+fancy_echo "Generating SSH key ..."
   ssh-keygen -t rsa -b 4096 -C "$emailvar"
 
-fancy echo "Start SSH agent ..."
+fancy_echo "Start SSH agent ..."
   eval "$(ssh-agent -s)"
 
-fancy echo "Add new key to SSH agent ..."
+fancy_echo "Add new key to SSH agent ..."
   ssh-add ~/.ssh/id_rsa
 
-Fancy echo "Copy your public key for adding to Github, etc. ..."
+Fancy_echo "Copy your public key for adding to Github, etc. ..."
   cat ~/.ssh/id_rsa.pub
 
 fancy_echo "Your public IP is ..."
