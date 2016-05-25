@@ -160,8 +160,8 @@ fancy_echo "Updating to latest Rubygems version ..."
 fancy_echo "Installing Bundler to install project-specific Ruby gems ..."
   gem install bundler --no-document --pre
 
-fancy_echo "Let bundler be run as root ..."
-  bundle config --global silence_root_warning 1
+# fancy_echo "Let bundler be run as root ..."
+  # bundle config --global silence_root_warning 1
 
 fancy_echo "Configuring Bundler for faster, parallel gem installation ..."
   number_of_cores=$(nproc)
@@ -194,7 +194,7 @@ fancy_echo "Setting up PHP packages for Wordpress ..."
   install_if_needed php5-gd libssh2-php
 
 fancy_echo "Restarting Apache ..."
-  service apache2 restart
+  service apache2 start
 
 fancy_echo "Installing vim settings ..."
   git clone https://github.com/ChrisLTD/macvim_config.git ~/.vim
