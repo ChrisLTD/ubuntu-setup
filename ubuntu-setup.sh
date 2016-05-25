@@ -215,7 +215,7 @@ fancy_echo "Start SSH agent ..."
 fancy_echo "Add new key to SSH agent ..."
   ssh-add ~/.ssh/id_rsa
 
-Fancy_echo "Copy your public key for adding to Github, etc. ..."
+fancy_echo "Copy your public key for adding to Github, etc. ..."
   cat ~/.ssh/id_rsa.pub
 
 fancy_echo "Your public IP is ..."
